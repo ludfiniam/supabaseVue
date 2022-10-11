@@ -1,6 +1,6 @@
 <template>
   <div v-if="appReady" class="min-h-full font-Poppins box-border">
-    <Navigation/>
+    <Navigation />
     <router-view />
   </div>
 </template>
@@ -11,7 +11,7 @@ import { ref } from "vue";
 import { supabase } from "./supabase/init";
 import store from "./store/index";
 export default {
-  components:{
+  components: {
     Navigation,
   },
   setup() {
@@ -20,7 +20,7 @@ export default {
 
     // Check to see if user is already logged in
     const user = supabase.auth.user();
-    
+
     // If user does not exist, need to make app ready
     if (!user) {
       appReady.value = true;
@@ -29,12 +29,11 @@ export default {
     // Runs when there is a auth state change
     // if user is logged in, this will fire
     supabase.auth.onAuthStateChange((_, session) => {
-      console.log("hello");
       store.methods.setUser(session);
       appReady.value = true;
     });
 
-    return {appReady};
+    return { appReady };
   },
 };
 </script>
